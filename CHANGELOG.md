@@ -1,5 +1,36 @@
 # Changelog
 
+## 2025-08-31 - File Upload Implementation (SHA: current)
+
+### Files Changed
+- Created lib/store/usePdfStore.ts
+- Created lib/hooks/useFileUpload.ts
+- Created components/ui/file-upload-dialog.tsx
+- Added components/ui/progress.tsx
+- Added uuid and react-dropzone dependencies
+
+### Summary
+Implemented core PDF file management functionality with file upload capabilities.
+
+### Steps
+1. Created Zustand store with Immer for PDF file state management
+2. Implemented PDF upload and preview generation using pdf.js
+3. Created FileUploadDialog component with drag-and-drop support
+4. Added Progress component for upload status
+5. Added unique ID generation for files
+
+### Commands Run
+```bash
+pnpm add uuid @types/uuid react-dropzone
+pnpm dlx shadcn@latest add progress
+```
+
+### Tests Run
+No tests implemented yet.
+
+### Migration Notes
+N/A
+
 ## 2025-08-31 - Project Structure and UI Components (SHA: 5d84dbe)
 
 ### Files Changed
