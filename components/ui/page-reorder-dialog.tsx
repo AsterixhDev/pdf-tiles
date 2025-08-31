@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Image from 'next/image';
 import { usePdfStore } from '@/lib/store/usePdfStore';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -51,10 +52,12 @@ function SortableItem({ id, pageNumber, imageUrl }: SortableItemProps) {
       <Card className="cursor-grab active:cursor-grabbing">
         <CardContent className="p-2">
           <div className="relative aspect-[3/4]">
-            <img
+            <Image
               src={imageUrl}
               alt={`Page ${pageNumber}`}
-              className="object-cover w-full h-full rounded"
+              className="object-cover rounded"
+              fill
+              sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 25vw"
             />
             <div className="absolute bottom-0 right-0 p-1 bg-background/80 text-xs rounded-tl">
               {pageNumber}
@@ -77,7 +80,7 @@ export function PageReorderDialog({ fileId, onClose, onSave }: PageReorderDialog
   const file = files.find(f => f.id === fileId);
   
   const [items, setItems] = useState(
-    file?.previews.map((preview, index) => ({
+    file?.previews.map(preview => ({
       id: `${preview.pageNumber}`,
       pageNumber: preview.pageNumber,
       imageUrl: preview.imageUrl,

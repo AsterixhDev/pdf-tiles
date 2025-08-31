@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react'
+import { useState, useEffect } from 'react'
+import Image from 'next/image'
 import { usePdfStore } from '@/lib/store/usePdfStore'
 import {
   Dialog,
@@ -165,14 +166,18 @@ export function ReaderModal({ open, onOpenChange, fileId, initialPage = 1 }: Rea
               height: preview.height * scale,
             }}
           >
-            <img
+            <Image
               src={preview.imageUrl}
               alt={`Page ${currentPage} of ${file.name}`}
-              className="absolute inset-0 w-full h-full"
+              className="absolute inset-0"
+              fill
               style={{
                 transform: `scale(${scale})`,
                 transformOrigin: 'top left',
+                objectFit: 'contain'
               }}
+              sizes="100vw"
+              quality={100}
             />
           </div>
         </div>

@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import Image from 'next/image'
 import { usePdfStore } from '@/lib/store/usePdfStore'
 import { Card, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
@@ -9,14 +10,14 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-import { QUALITY_PRESETS, QualityPreset } from '@/types/pdf'
+import { QualityPreset } from '@/types/pdf'
 import { cn } from '@/lib/utils'
 import { ReaderModal } from './reader-modal'
 import { PageReorderDialog } from './page-reorder-dialog'
 import { ExportDialog } from './export-dialog'
 
 export function GalleryGrid() {
-  const { files, activeFileId, setActiveFile, removeFile } = usePdfStore()
+  const { files, activeFileId, setActiveFile } = usePdfStore()
   const [selectedPage, setSelectedPage] = useState<{fileId: string; pageNumber: number} | null>(null)
   const [reorderingFile, setReorderingFile] = useState<string | null>(null)
   const [exportingFile, setExportingFile] = useState<string | null>(null)
@@ -68,10 +69,12 @@ export function GalleryGrid() {
                 >
                   <CardContent className="p-2">
                     <div className="relative aspect-[3/4]">
-                      <img
+                      <Image
                         src={preview.imageUrl}
                         alt={`Page ${preview.pageNumber} of ${file.name}`}
-                        className="object-cover w-full h-full rounded"
+                        className="object-cover rounded"
+                        fill
+                        sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 25vw"
                       />
                       <div className="absolute bottom-0 right-0 p-1 bg-background/80 text-xs rounded-tl">
                         {preview.pageNumber}

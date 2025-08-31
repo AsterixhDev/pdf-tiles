@@ -1,7 +1,6 @@
 import { describe, it, expect, vi } from 'vitest'
 import { render, screen, mockPdfData } from '@/test/test-utils'
 import { ExportDialog } from '@/components/ui/export-dialog'
-import { usePdfStore } from '@/lib/store/usePdfStore'
 
 // Mock the PDF store
 vi.mock('@/lib/store/usePdfStore', () => ({
@@ -95,3 +94,8 @@ describe('ExportDialog', () => {
     expect(screen.getByRole('progressbar')).toBeInTheDocument()
   })
 })
+function beforeEach(handler: () => void) {
+    handler()
+    throw new Error('Function not implemented.')
+}
+

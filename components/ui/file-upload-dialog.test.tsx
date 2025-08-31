@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from 'vitest'
-import { render, screen, mockPdfFile } from '@/test/test-utils'
+import { render, screen } from '@/test/test-utils'
 import { FileUploadDialog } from '@/components/ui/file-upload-dialog'
 
 // Mock the useFileUpload hook

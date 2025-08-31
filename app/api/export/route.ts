@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { PDFDocument } from 'pdf-lib'
-import { QualityPreset } from '@/types/pdf'
+
 
 export const maxDuration = 300 // 5 minutes max for large PDFs
 export const dynamic = 'force-dynamic'
@@ -8,10 +8,9 @@ export const dynamic = 'force-dynamic'
 export async function POST(req: NextRequest) {
   try {
     const data = await req.json()
-    const { images, filename, quality = 'medium' } = data as {
+    const { images, filename } = data as {
       images: { url: string; width: number; height: number }[]
       filename: string
-      quality: QualityPreset
     }
 
     // Create a new PDF document
