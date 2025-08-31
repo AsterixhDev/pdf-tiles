@@ -1,5 +1,37 @@
 # Changelog
 
+## 2025-08-31 - Project Structure and UI Components (SHA: 5d84dbe)
+
+### Files Changed
+- Added UI components from shadcn/ui (button, card, dialog, form, input, dropdown-menu)
+- Added Sonner for notifications
+- Created initial types in types/pdf.ts
+- Updated app/layout.tsx to include Toaster
+- Created project directory structure
+
+### Summary
+Set up the basic UI components and type definitions needed for the PDF gallery viewer.
+
+### Steps
+1. Added shadcn/ui components using the CLI
+2. Installed and configured Sonner for notifications
+3. Created TypeScript interfaces for PDF files and previews
+4. Defined quality preset types and configurations
+5. Set up project directory structure for API routes and components
+
+### Commands Run
+```bash
+pnpm dlx shadcn@latest add button card dialog form input dropdown-menu
+pnpm add sonner
+mkdir -p app/api/{upload,proxy-image,manual-add,export} components/ui lib/{hooks,store,utils} types
+```
+
+### Tests Run
+No tests implemented yet.
+
+### Migration Notes
+N/A
+
 ## 2025-08-31 - Initial Project Setup (SHA: initial)
 
 ### Files Changed
