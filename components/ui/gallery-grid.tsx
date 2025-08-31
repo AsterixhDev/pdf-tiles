@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { usePdfStore } from '@/lib/store/usePdfStore'
 import { Card, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
-import { MoreVertical, Download, ZoomIn, Trash, GripVertical } from 'lucide-react'
+import { MoreVertical, Download, ZoomIn, Trash, GripVertical, FileOutput } from 'lucide-react'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -13,11 +13,13 @@ import { QUALITY_PRESETS, QualityPreset } from '@/types/pdf'
 import { cn } from '@/lib/utils'
 import { ReaderModal } from './reader-modal'
 import { PageReorderDialog } from './page-reorder-dialog'
+import { ExportDialog } from './export-dialog'
 
 export function GalleryGrid() {
   const { files, activeFileId, setActiveFile, removeFile } = usePdfStore()
   const [selectedPage, setSelectedPage] = useState<{fileId: string; pageNumber: number} | null>(null)
   const [reorderingFile, setReorderingFile] = useState<string | null>(null)
+  const [exportingFile, setExportingFile] = useState<string | null>(null)
 
   const handleDownload = async (fileId: string, pageNumber: number, quality: QualityPreset) => {
     const file = files.find((f) => f.id === fileId)
@@ -95,6 +97,10 @@ export function GalleryGrid() {
                             <GripVertical className="mr-2 h-4 w-4" />
                             Reorder Pages
                           </DropdownMenuItem>
+                          <DropdownMenuItem onSelect={() => setExportingFile(file.id)}>
+                            <FileOutput className="mr-2 h-4 w-4" />
+                            Export PDF
+                          </DropdownMenuItem>
                           <DropdownMenuItem
                             className="text-destructive"
                             onSelect={() => {
@@ -128,6 +134,14 @@ export function GalleryGrid() {
           fileId={reorderingFile}
           onClose={() => setReorderingFile(null)}
           onSave={() => setReorderingFile(null)}
+        />
+      )}
+
+      {exportingFile && (
+        <ExportDialog
+          fileId={exportingFile}
+          open={true}
+          onOpenChange={(open) => !open && setExportingFile(null)}
         />
       )}
     </>

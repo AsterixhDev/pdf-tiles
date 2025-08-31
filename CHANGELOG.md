@@ -1,6 +1,35 @@
 # Changelog
 
-## 2025-08-31 - Page Reordering and Manual Add Implementation (SHA: current)
+## 2025-08-31 - PDF Export Implementation (SHA: current)
+
+### Files Changed
+- Added app/api/export/route.ts for PDF generation endpoint
+- Added components/ui/export-dialog.tsx for export configuration
+- Added components/ui/radio-group.tsx
+- Updated components/ui/gallery-grid.tsx with export functionality
+
+### Summary
+Implemented PDF export functionality with quality presets and page reordering support.
+
+### Steps
+1. Created PDF export API endpoint using pdf-lib
+2. Added export dialog with filename and quality options
+3. Added export button to gallery actions
+4. Integrated export with page arrangement
+5. Added progress feedback for export process
+
+### Commands Run
+```bash
+pnpm dlx shadcn@latest add radio-group
+```
+
+### Tests Run
+No tests implemented yet.
+
+### Migration Notes
+N/A
+
+## 2025-08-31 - Page Reordering and Manual Add Implementation (SHA: ecaa3be)
 
 ### Files Changed
 - Added components/ui/page-reorder-dialog.tsx for drag-and-drop page reordering
