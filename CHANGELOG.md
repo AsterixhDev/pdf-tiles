@@ -1,6 +1,34 @@
 # Changelog
 
-## 2025-08-31 - File Upload Implementation (SHA: current)
+## 2025-08-31 - Gallery and Reader Implementation (SHA: current)
+
+### Files Changed
+- Created components/ui/gallery-grid.tsx
+- Created components/ui/reader-modal.tsx
+- Added Lucide icons
+
+### Summary
+Implemented PDF gallery view with thumbnails and a full-screen reader modal.
+
+### Steps
+1. Created GalleryGrid component with responsive grid layout
+2. Added thumbnail view with page numbers and actions
+3. Implemented ReaderModal with zoom controls and navigation
+4. Added keyboard shortcuts for navigation
+5. Implemented page download functionality
+
+### Commands Run
+```bash
+pnpm add lucide-react
+```
+
+### Tests Run
+No tests implemented yet.
+
+### Migration Notes
+N/A
+
+## 2025-08-31 - File Upload Implementation (SHA: d27c9a2)
 
 ### Files Changed
 - Created lib/store/usePdfStore.ts
