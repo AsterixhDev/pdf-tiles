@@ -1,6 +1,40 @@
 # Changelog
 
-## 2025-08-31 - PDF Export Implementation (SHA: current)
+## 2025-08-31 - Test Implementation (SHA: current)
+
+### Files Changed
+- Added test/test-utils.tsx for testing utilities
+- Added component tests for FileUploadDialog and ExportDialog
+- Added store tests for usePdfStore
+- Added E2E tests with Playwright
+- Added testing configurations and scripts
+
+### Summary
+Implemented comprehensive test suite including unit tests and E2E tests.
+
+### Steps
+1. Set up Vitest for unit testing
+2. Created test utilities and mocks
+3. Implemented component unit tests
+4. Implemented store unit tests
+5. Added E2E tests with Playwright
+6. Added test scripts to package.json
+
+### Commands Run
+```bash
+pnpm add -D vitest @vitejs/plugin-react @testing-library/react @testing-library/jest-dom @testing-library/user-event jsdom @playwright/test
+```
+
+### Tests Run
+- Unit tests for FileUploadDialog
+- Unit tests for ExportDialog
+- Unit tests for PDF store
+- E2E tests for core functionality
+
+### Migration Notes
+N/A
+
+## 2025-08-31 - PDF Export Implementation (SHA: 8c2681b)
 
 ### Files Changed
 - Added app/api/export/route.ts for PDF generation endpoint
