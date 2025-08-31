@@ -23,6 +23,11 @@ import {
   rectSortingStrategy,
 } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
+import dynamic from 'next/dynamic'
+const PreviewDisplay = dynamic(
+  () => import('./PreviewDisplay'),
+  { ssr: false }
+);
 
 interface SortableItemProps {
   id: string;
@@ -52,13 +57,11 @@ function SortableItem({ id, pageNumber, imageUrl }: SortableItemProps) {
       <Card className="cursor-grab active:cursor-grabbing">
         <CardContent className="p-2">
           <div className="relative aspect-[3/4]">
-            <Image
-              src={imageUrl}
+            
+             <PreviewDisplay src={imageUrl}
               alt={`Page ${pageNumber}`}
               className="object-cover rounded"
-              fill
-              sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 25vw"
-            />
+              sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 25vw"/>
             <div className="absolute bottom-0 right-0 p-1 bg-background/80 text-xs rounded-tl">
               {pageNumber}
             </div>

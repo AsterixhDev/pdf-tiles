@@ -37,7 +37,6 @@ export function FileUploadDialog({ open, onOpenChange }: FileUploadDialogProps) 
     accept: {
       'application/pdf': ['.pdf']
     },
-    maxFiles: 1,
     disabled: isUploading,
   })
 

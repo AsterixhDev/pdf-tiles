@@ -23,37 +23,25 @@ export const useFileUpload = (): UseFileUploadReturn => {
   const [progress, setProgress] = useState(0)
   const { addFile, setError } = usePdfStore()
 
-  const generatePreview = async (pdfBytes: ArrayBuffer, pageNumber: number): Promise<string> => {
-    // Check cache first
-    const cacheKey = `${uuidv4()}_${pageNumber}`
-    const cached = previewCache.get(cacheKey)
-    if (cached) return cached as string
+  const generatePreview = async (pdfDoc: PDFDocument, pageNumber: number): Promise<string> => {
+    try {
+      // Create a new document with just this page
+      const singlePagePdf = await PDFDocument.create()
+      const [copiedPage] = await singlePagePdf.copyPages(pdfDoc, [pageNumber - 1])
+      singlePagePdf.addPage(copiedPage)
 
-    // Generate preview using API route
-    const formData = new FormData()
-    formData.append('pdf', new Blob([pdfBytes]))
-    formData.append('page', pageNumber.toString())
-
-    const response = await fetch('/api/preview', {
-      method: 'POST',
-      body: formData,
-    })
-
-    if (!response.ok) {
+      // Convert to base64 PDF
+      const pdfBytes = await singlePagePdf.saveAsBase64()
+      const dataUrl = `data:application/pdf;base64,${pdfBytes}`
+      // Cache the result
+      const cacheKey = `${uuidv4()}_${pageNumber}`
+      previewCache.set(cacheKey, dataUrl)
+      
+      return dataUrl
+    } catch (error) {
+      console.error('Error generating preview:', error)
       throw new Error('Failed to generate preview')
     }
-
-    // Convert response to base64
-    const imageBlob = await response.blob()
-    const base64url = await new Promise<string>((resolve) => {
-      const reader = new FileReader()
-      reader.onload = () => resolve(reader.result as string)
-      reader.readAsDataURL(imageBlob)
-    })
-
-    // Cache the result
-    previewCache.set(cacheKey, base64url)
-    return base64url
   }
 
   const uploadFile = async (file: File) => {
@@ -70,7 +58,7 @@ export const useFileUpload = (): UseFileUploadReturn => {
         Array.from({ length: numPages }, (_, i) => i + 1).map(async (pageNumber) => {
           try {
             setProgress((pageNumber / numPages) * 100)
-            const preview = await generatePreview(arrayBuffer, pageNumber)
+            const preview = await generatePreview(pdfDoc, pageNumber)
             const page = pdfDoc.getPages()[pageNumber - 1]
             return {
               pageNumber,

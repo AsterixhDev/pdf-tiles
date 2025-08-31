@@ -15,7 +15,12 @@ import { cn } from '@/lib/utils'
 import { ReaderModal } from './reader-modal'
 import { PageReorderDialog } from './page-reorder-dialog'
 import { ExportDialog } from './export-dialog'
+import dynamic from 'next/dynamic'
 
+const PreviewDisplay = dynamic(
+  () => import('./PreviewDisplay'),
+  { ssr: false }
+);
 export function GalleryGrid() {
   const { files, activeFileId, setActiveFile } = usePdfStore()
   const [selectedPage, setSelectedPage] = useState<{fileId: string; pageNumber: number} | null>(null)
@@ -69,13 +74,7 @@ export function GalleryGrid() {
                 >
                   <CardContent className="p-2">
                     <div className="relative aspect-[3/4]">
-                      <Image
-                        src={preview.imageUrl}
-                        alt={`Page ${preview.pageNumber} of ${file.name}`}
-                        className="object-cover rounded"
-                        fill
-                        sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 25vw"
-                      />
+                      <PreviewDisplay preview={preview} alt='' src={preview.imageUrl}/>
                       <div className="absolute bottom-0 right-0 p-1 bg-background/80 text-xs rounded-tl">
                         {preview.pageNumber}
                       </div>

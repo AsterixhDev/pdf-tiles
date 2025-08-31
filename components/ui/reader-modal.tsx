@@ -22,6 +22,11 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { QUALITY_PRESETS, QualityPreset } from '@/types/pdf'
+import dynamic from 'next/dynamic'
+const PreviewDisplay = dynamic(
+  () => import('./PreviewDisplay'),
+  { ssr: false }
+);
 
 interface ReaderModalProps {
   open: boolean
@@ -166,19 +171,17 @@ export function ReaderModal({ open, onOpenChange, fileId, initialPage = 1 }: Rea
               height: preview.height * scale,
             }}
           >
-            <Image
-              src={preview.imageUrl}
+            
+            <PreviewDisplay preview={preview} src={preview.imageUrl}
               alt={`Page ${currentPage} of ${file.name}`}
               className="absolute inset-0"
-              fill
               style={{
                 transform: `scale(${scale})`,
                 transformOrigin: 'top left',
                 objectFit: 'contain'
               }}
               sizes="100vw"
-              quality={100}
-            />
+              quality={100}/>
           </div>
         </div>
       </DialogContent>
