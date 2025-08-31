@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { usePdfStore } from '@/lib/store/usePdfStore'
 import { Card, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
-import { MoreVertical, Download, ZoomIn, Trash } from 'lucide-react'
+import { MoreVertical, Download, ZoomIn, Trash, GripVertical } from 'lucide-react'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -12,10 +12,12 @@ import {
 import { QUALITY_PRESETS, QualityPreset } from '@/types/pdf'
 import { cn } from '@/lib/utils'
 import { ReaderModal } from './reader-modal'
+import { PageReorderDialog } from './page-reorder-dialog'
 
 export function GalleryGrid() {
   const { files, activeFileId, setActiveFile, removeFile } = usePdfStore()
   const [selectedPage, setSelectedPage] = useState<{fileId: string; pageNumber: number} | null>(null)
+  const [reorderingFile, setReorderingFile] = useState<string | null>(null)
 
   const handleDownload = async (fileId: string, pageNumber: number, quality: QualityPreset) => {
     const file = files.find((f) => f.id === fileId)
@@ -89,6 +91,10 @@ export function GalleryGrid() {
                             <Download className="mr-2 h-4 w-4" />
                             Download
                           </DropdownMenuItem>
+                          <DropdownMenuItem onSelect={() => setReorderingFile(file.id)}>
+                            <GripVertical className="mr-2 h-4 w-4" />
+                            Reorder Pages
+                          </DropdownMenuItem>
                           <DropdownMenuItem
                             className="text-destructive"
                             onSelect={() => {
@@ -112,10 +118,18 @@ export function GalleryGrid() {
 
       <ReaderModal
         open={selectedPage !== null}
-        onOpenChange={(open) => !open && setSelectedPage(null)}
+        onOpenChange={(open: boolean) => !open && setSelectedPage(null)}
         fileId={selectedPage?.fileId}
         initialPage={selectedPage?.pageNumber}
       />
+
+      {reorderingFile && (
+        <PageReorderDialog
+          fileId={reorderingFile}
+          onClose={() => setReorderingFile(null)}
+          onSave={() => setReorderingFile(null)}
+        />
+      )}
     </>
   )
 }

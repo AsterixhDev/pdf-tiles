@@ -1,6 +1,36 @@
 # Changelog
 
-## 2025-08-31 - Gallery and Reader Implementation (SHA: current)
+## 2025-08-31 - Page Reordering and Manual Add Implementation (SHA: current)
+
+### Files Changed
+- Added components/ui/page-reorder-dialog.tsx for drag-and-drop page reordering
+- Added components/ui/manual-add-dialog.tsx for adding PDFs by URL
+- Updated components/ui/gallery-grid.tsx with reordering functionality
+- Updated app/page.tsx with new UI for manual add feature
+- Added @dnd-kit packages for drag-and-drop functionality
+
+### Summary
+Implemented page reordering functionality and manual PDF addition by URL.
+
+### Steps
+1. Added drag-and-drop page reordering using @dnd-kit
+2. Created page reorder dialog with preview grid
+3. Added manual PDF addition by URL with form validation
+4. Updated main page UI with dropdown menu for add options
+5. Integrated both features into the gallery grid
+
+### Commands Run
+```bash
+pnpm add @dnd-kit/core @dnd-kit/sortable @dnd-kit/utilities
+```
+
+### Tests Run
+No tests implemented yet.
+
+### Migration Notes
+N/A
+
+## 2025-08-31 - Gallery and Reader Implementation (SHA: 0342b04)
 
 ### Files Changed
 - Created components/ui/gallery-grid.tsx
